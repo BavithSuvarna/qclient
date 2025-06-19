@@ -14,7 +14,7 @@ const AdminPanel = () => {
 
   const callNext = async () => {
   try {
-    const res = await axios.post('http://localhost:5000/api/queue/call-next');
+    const res = await axios.post('https://qserver-ispi.onrender.com/api/queue/call-next');
 
     if (res.data.empty) {
       setCurrentUser({ empty: true });

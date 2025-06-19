@@ -7,7 +7,7 @@ const QueueDisplay = () => {
 
   const fetchQueue = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/queue');
+      const res = await axios.get('https://qserver-ispi.onrender.com/api/queue');
       setQueue(res.data.queue || []);
       setNotArrived(res.data.notArrived || []);
     } catch (error) {

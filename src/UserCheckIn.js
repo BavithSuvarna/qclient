@@ -34,7 +34,7 @@ const UserCheckIn = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/api/queue/join', form);
+      const res = await axios.post('https://qserver-ispi.onrender.com/api/queue/join', form);
       toast.success(`🎟️ Joined queue! Ticket ID: ${res.data._id}`);
       setForm({ name: '', phone: '' });
     } catch (error) {
