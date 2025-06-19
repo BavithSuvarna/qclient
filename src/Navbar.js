@@ -11,7 +11,7 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <div className="navbar-title">Online Queuing System</div>
+      <div className="navbar-title">QVista</div>
 
       <div className={`navbar-links ${menuOpen ? 'open' : ''}`}>
         <NavLink to="/" end className={({ isActive }) => (isActive ? 'active' : '')}>
