@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-
 const AdminPanel = () => {
   const [currentUser, setCurrentUser] = useState(null);
 
@@ -13,24 +12,21 @@ const AdminPanel = () => {
   };
 
   const callNext = async () => {
-  try {
-    const res = await axios.post('https://qserver-ispi.onrender.com/api/queue/call-next');
+    try {
+      const res = await axios.post('https://qserver-ispi.onrender.com/api/queue/call-next');
 
-    if (res.data.empty) {
-      setCurrentUser({ empty: true });
-      // toast.info('Queue is empty!');
-    } else if (res.data && res.data._id) {
-      setCurrentUser(res.data);
-      toast.success('👋 Called next person!');
-    } else {
-      setCurrentUser(null);
-      // toast.warning('Queue is empty.');
+      if (res.data.empty) {
+        setCurrentUser({ empty: true });
+      } else if (res.data && res.data._id) {
+        setCurrentUser(res.data);
+        toast.success('👋 Called next person!');
+      } else {
+        setCurrentUser(null);
+      }
+    } catch (error) {
+      toast.error('❌ Failed to call next!');
     }
-  } catch (error) {
-    toast.error('❌ Failed to call next!');
-  }
-};
-
+  };
 
   const markServed = async () => {
     if (!currentUser || !currentUser._id) return;
@@ -55,7 +51,7 @@ const AdminPanel = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('adminLoggedIn');
+    localStorage.removeItem('adminLoggedIn'); // ✅ logout logic
     window.location.href = '/admin';
   };
 
@@ -71,12 +67,12 @@ const AdminPanel = () => {
       </div>
 
       <p style={{ fontSize: '18px' }}>
-  {currentUser?.empty
-    ? ' Queue is empty!'
-    : currentUser?.name
-    ? `Now Serving: ${currentUser.name} (${currentUser.phone})`
-    : 'Click "Call Next" to start serving.'}
-</p>
+        {currentUser?.empty
+          ? ' Queue is empty!'
+          : currentUser?.name
+          ? `Now Serving: ${currentUser.name} (${currentUser.phone})`
+          : 'Click "Call Next" to start serving.'}
+      </p>
 
       {currentUser?.joinedAt && (
         <p style={{ color: '#666', marginTop: '10px' }}>

@@ -6,7 +6,7 @@ const UserCheckIn = () => {
   const [form, setForm] = useState({ name: '', phone: '' });
   const [loading, setLoading] = useState(false);
 
-  const handleNameChange = (e) => {
+   const handleNameChange = (e) => {
     const value = e.target.value;
     if (/^[a-zA-Z\s]*$/.test(value)) {
       setForm({ ...form, name: value });
@@ -42,6 +42,9 @@ const UserCheckIn = () => {
         form,
         { timeout: 15000 } // 15 seconds max wait
       );
+
+      localStorage.setItem('userId', res.data._id);
+      
       toast.success(`🎟️ Joined queue! Ticket ID: ${res.data._id}`);
       setForm({ name: '', phone: '' });
     } catch (error) {

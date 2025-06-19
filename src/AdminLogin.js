@@ -11,7 +11,7 @@ function AdminLogin() {
     e.preventDefault();
 
     if (username === 'admin' && password === '1234') {
-      localStorage.setItem('adminLoggedIn', 'true');
+      localStorage.setItem('adminLoggedIn', 'true'); // ✅ store flag
       navigate('/admin/panel');
     } else {
       toast.error('❌ Invalid credentials');
@@ -19,7 +19,7 @@ function AdminLogin() {
   };
 
   return (
-    <div className='content' style={{ textAlign: 'center'}}>
+    <div className='content' style={{ textAlign: 'center' }}>
       <h2 style={{ color: '#003366', marginBottom: '30px' }}> Admin Login</h2>
       <form onSubmit={handleLogin}>
         <input
@@ -64,7 +64,7 @@ function AdminLogin() {
             cursor: 'pointer',
           }}
         >
-           Login
+          Login
         </button>
       </form>
     </div>

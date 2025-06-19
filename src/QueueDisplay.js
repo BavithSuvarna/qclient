@@ -17,7 +17,7 @@ const QueueDisplay = () => {
 
   useEffect(() => {
     fetchQueue();
-    const interval = setInterval(fetchQueue, 3000); // Auto-refresh every 3 seconds
+    const interval = setInterval(fetchQueue, 3000);
     return () => clearInterval(interval);
   }, []);
 
@@ -39,8 +39,20 @@ const QueueDisplay = () => {
     }
   };
 
-  // ✅ Show both waiting and called users (preserving order)
+  const clearNotArrived = async () => {
+    const confirm = window.confirm('Are you sure you want to clear the Not Arrived list?');
+    if (!confirm) return;
+    try {
+      await axios.post('https://qserver-ispi.onrender.com/api/queue/clear-not-arrived');
+      fetchQueue();
+    } catch (err) {
+      console.error('Error clearing not arrived list:', err);
+    }
+  };
+
   const displayQueue = queue.filter(user => user.status === 'waiting' || user.status === 'called');
+
+  const isAdmin = localStorage.getItem('adminLoggedIn') === 'true'; // ✅ new check
 
   return (
     <div className="content" style={{ textAlign: 'center' }}>
@@ -74,52 +86,76 @@ const QueueDisplay = () => {
         <>
           <h3 style={{ color: '#cc0000', marginTop: '30px' }}>⏰ Not Arrived On Time</h3>
           <ul style={{ listStyle: 'none', padding: 0 }}>
-            {notArrived.map((user) => (
-              <li key={user._id} style={{
-                backgroundColor: '#fff',
-                margin: '10px auto',
-                padding: '15px 20px',
-                borderRadius: '10px',
-                maxWidth: '500px',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-                fontSize: '16px',
-                color: '#cc0000',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}>
-                <span>{user.name}</span>
-                <div>
-                  <button
-                    onClick={() => rejoin(user._id)}
-                    style={{
-                      marginRight: '10px',
-                      backgroundColor: '#007bff',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '5px',
-                      padding: '6px 10px',
-                      cursor: 'pointer'
-                    }}>
-                    Join Again
-                  </button>
-                  <button
-                    onClick={() => exit(user._id)}
-                    style={{
-                      backgroundColor: '#dc3545',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '5px',
-                      padding: '6px 10px',
-                      cursor: 'pointer'
-                    }}>
-                    Exit
-                  </button>
-                </div>
-              </li>
-            ))}
+            {notArrived.map((user) => {
+              const currentUserId = localStorage.getItem('userId');
+              const isUser = currentUserId === user._id;
+              return (
+                <li key={user._id} style={{
+                  backgroundColor: '#fff',
+                  margin: '10px auto',
+                  padding: '15px 20px',
+                  borderRadius: '10px',
+                  maxWidth: '500px',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                  fontSize: '16px',
+                  color: '#cc0000',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
+                }}>
+                  <span>{user.name}</span>
+                  {isUser && (
+                    <div>
+                      <button
+                        onClick={() => rejoin(user._id)}
+                        style={{
+                          marginRight: '10px',
+                          backgroundColor: '#007bff',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '5px',
+                          padding: '6px 10px',
+                          cursor: 'pointer'
+                        }}>
+                        Join Again
+                      </button>
+                      <button
+                        onClick={() => exit(user._id)}
+                        style={{
+                          backgroundColor: '#dc3545',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '5px',
+                          padding: '6px 10px',
+                          cursor: 'pointer'
+                        }}>
+                        Exit
+                      </button>
+                    </div>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </>
+      )}
+
+      {isAdmin && displayQueue.length === 0 && notArrived.length > 0 && (
+        <button
+          onClick={clearNotArrived}
+          style={{
+            marginTop: '30px',
+            padding: '10px 20px',
+            backgroundColor: '#ff6600',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            fontSize: '16px'
+          }}>
+          Clear Not Arrived List
+        </button>
       )}
     </div>
   );
