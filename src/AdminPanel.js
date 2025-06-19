@@ -35,7 +35,7 @@ const AdminPanel = () => {
   const markServed = async () => {
     if (!currentUser || !currentUser._id) return;
     try {
-      await axios.post(`http://localhost:5000/api/queue/mark-served/${currentUser._id}`);
+      await axios.post(`https://qserver-ispi.onrender.com/queue/mark-served/${currentUser._id}`);
       setCurrentUser(null);
       toast.success('✅ Marked as served!');
     } catch (error) {
