@@ -8,6 +8,11 @@
       "type": "image/x-icon"
     },
     {
+      "src": "favicon1.png",
+      "sizes": "194x190",
+      "type": "image/png"
+    },
+    {
       "src": "logo192.png",
       "type": "image/png",
       "sizes": "192x192"
