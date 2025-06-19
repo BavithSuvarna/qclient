@@ -23,7 +23,7 @@ const QueueDisplay = () => {
 
   const rejoin = async (id) => {
     try {
-      await axios.post(`http://localhost:5000/api/queue/rejoin/${id}`);
+      await axios.post(`https://qserver-ispi.onrender.com/api/queue/rejoin/${id}`);
       fetchQueue();
     } catch (err) {
       console.error('Error rejoining:', err);
@@ -32,7 +32,7 @@ const QueueDisplay = () => {
 
   const exit = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/queue/exit/${id}`);
+      await axios.delete(`https://qserver-ispi.onrender.com/api/queue/exit/${id}`);
       fetchQueue();
     } catch (err) {
       console.error('Error exiting:', err);

@@ -14,7 +14,7 @@ const AdminPanel = () => {
 
   const callNext = async () => {
   try {
-    const res = await axios.post('https://qserver-ispi.onrender.com/api/queue/call-next');
+    const res = await axios.post('https://qserver-ispi.onrender.com/apiqueue/call-next');
 
     if (res.data.empty) {
       setCurrentUser({ empty: true });
@@ -35,7 +35,7 @@ const AdminPanel = () => {
   const markServed = async () => {
     if (!currentUser || !currentUser._id) return;
     try {
-      await axios.post(`https://qserver-ispi.onrender.com/queue/mark-served/${currentUser._id}`);
+      await axios.post(`https://qserver-ispi.onrender.com/api/queue/mark-served/${currentUser._id}`);
       setCurrentUser(null);
       toast.success('✅ Marked as served!');
     } catch (error) {
@@ -46,7 +46,7 @@ const AdminPanel = () => {
   const markNotArrived = async () => {
     if (!currentUser || !currentUser._id) return;
     try {
-      await axios.post(`http://localhost:5000/api/queue/not-arrived/${currentUser._id}`);
+      await axios.post(`https://qserver-ispi.onrender.com/api/queue/not-arrived/${currentUser._id}`);
       setCurrentUser(null);
       toast.info('⏰ Moved to Not Arrived!');
     } catch (error) {
