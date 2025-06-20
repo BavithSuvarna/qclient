@@ -10,7 +10,7 @@ function AdminLogin() {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    if (username === 'Bavith' && password === '9257') {
+    if (username === USERNAME && password === PASSWORD) {
       localStorage.setItem('adminLoggedIn', 'true'); // ✅ store flag
       navigate('/admin/panel');
     } else {
