@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+// ✅ Read credentials securely from environment variables
+const USERNAME = process.env.REACT_APP_ADMIN_USERNAME;
+const PASSWORD = process.env.REACT_APP_ADMIN_PASSWORD;
+
 function AdminLogin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -10,7 +14,7 @@ function AdminLogin() {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    if (username === 'admin@qvista.com' && password === 'QvistaSecure') {
+    if (username === USERNAME && password === PASSWORD) {
       localStorage.setItem('adminLoggedIn', 'true'); // ✅ store flag
       navigate('/admin/panel');
     } else {
