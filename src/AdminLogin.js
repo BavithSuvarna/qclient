@@ -10,7 +10,7 @@ function AdminLogin() {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    if (username === USERNAME && password === PASSWORD) {
+    if (username === 'admin@qvista.com' && password === 'QvistaSecure') {
       localStorage.setItem('adminLoggedIn', 'true'); // ✅ store flag
       navigate('/admin/panel');
     } else {
