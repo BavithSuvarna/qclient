@@ -50,7 +50,7 @@ const QueueDisplay = () => {
     }
   };
 
-  const displayQueue = queue.filter(user => user.status === 'Waiting' || user.status === 'Called');
+  const displayQueue = queue.filter(user => user.status === 'waiting' || user.status === 'called');
 
   const isAdmin = localStorage.getItem('adminLoggedIn') === 'true'; // ✅ new check
 
