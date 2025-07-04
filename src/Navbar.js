@@ -9,6 +9,10 @@ const Navbar = () => {
     setMenuOpen(!menuOpen);
   };
 
+  const handleLinkClick = () => {
+    setMenuOpen(false);
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-title" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -21,13 +25,26 @@ const Navbar = () => {
       </div>
 
       <div className={`navbar-links ${menuOpen ? 'open' : ''}`}>
-        <NavLink to="/" end className={({ isActive }) => (isActive ? 'active' : '')}>
+        <NavLink
+          to="/"
+          end
+          className={({ isActive }) => (isActive ? 'active' : '')}
+          onClick={handleLinkClick}
+        >
           User 
         </NavLink>
-        <NavLink to="/queue" className={({ isActive }) => (isActive ? 'active' : '')}>
+        <NavLink
+          to="/queue"
+          className={({ isActive }) => (isActive ? 'active' : '')}
+          onClick={handleLinkClick}
+        >
           Queue Display
         </NavLink>
-        <NavLink to="/admin" className={({ isActive }) => (isActive ? 'active' : '')}>
+        <NavLink
+          to="/admin"
+          className={({ isActive }) => (isActive ? 'active' : '')}
+          onClick={handleLinkClick}
+        >
           Admin Login
         </NavLink>
       </div>
